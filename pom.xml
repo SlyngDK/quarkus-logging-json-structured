@@ -21,14 +21,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <quarkus.version>1.7.0.Final</quarkus.version>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
 
-        <jboss-logging.version>3.3.2.Final</jboss-logging.version>
-        <commons-logging-jboss-logging.version>1.0.0.Final</commons-logging-jboss-logging.version>
-
         <quarkus.version>1.7.1.Final</quarkus.version>
-
     </properties>
 
     <packaging>pom</packaging>
