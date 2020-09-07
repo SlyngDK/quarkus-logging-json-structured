@@ -33,6 +33,9 @@ public class LoggingJsonStructuredRecorder {
 
 
     public RuntimeValue<Optional<Formatter>> initializeJsonLogging(JsonConfigStructured config) {
+        if (!config.enable) {
+            return new RuntimeValue<>(Optional.empty());
+        }
 
         InjectableInstance<JsonProvider> instance = Arc.container().select(JsonProvider.class);
 

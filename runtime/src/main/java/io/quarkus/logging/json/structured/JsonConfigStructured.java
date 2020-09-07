@@ -9,6 +9,11 @@ import java.util.Optional;
 
 @ConfigRoot(phase = ConfigPhase.RUN_TIME, name = "log.console.json.structured")
 public class JsonConfigStructured {
+    /**
+     * Determine whether to enable the JSON console formatting extension, which disables "normal" console formatting.
+     */
+    @ConfigItem(name = ConfigItem.PARENT, defaultValue = "true")
+    boolean enable;
 
     /**
      * Configuration properties to customize fields
