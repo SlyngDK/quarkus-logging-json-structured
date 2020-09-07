@@ -70,17 +70,15 @@ public class JsonFormatter extends ExtFormatter {
     @Override
     public String format(ExtLogRecord record) {
         try {
-            JsonGenerator generator = this.jsonFactory.createGenerator(writer);
-            generator.writeStartObject();
-            for (JsonProvider provider : this.providers) {
-                provider.writeTo(generator, record);
+            try (JsonGenerator generator = this.jsonFactory.createGenerator(writer)) {
+                generator.writeStartObject();
+                for (JsonProvider provider : this.providers) {
+                    provider.writeTo(generator, record);
+                }
+                generator.writeEndObject();
+                generator.flush();
+                writer.write(lineSeparatorBytes);
             }
-            generator.writeEndObject();
-            generator.flush();
-
-            writer.write(lineSeparatorBytes);
-//            writer.append(formatMessage(record));
-//            writer.append('\n');
             return writer.toString();
         } catch (Exception e) {
             // Wrap and rethrow

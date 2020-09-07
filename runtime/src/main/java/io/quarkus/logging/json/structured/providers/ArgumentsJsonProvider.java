@@ -1,6 +1,7 @@
 package io.quarkus.logging.json.structured.providers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import io.quarkus.logging.json.structured.JsonConfigStructured;
 import io.quarkus.logging.json.structured.JsonProvider;
 import io.quarkus.logging.json.structured.StructuredArgument;
 import org.jboss.logmanager.ExtLogRecord;
@@ -8,19 +9,20 @@ import org.jboss.logmanager.ExtLogRecord;
 import java.io.IOException;
 
 public class ArgumentsJsonProvider implements JsonProvider {
-
-    public static final String FIELD_ARGUMENTS = "arguments";
-
-
     private boolean includeStructuredArguments = true;
     private boolean includeNonStructuredArguments;
     private String nonStructuredArgumentsFieldPrefix = "arg";
+    private String fieldName;
 
-    public ArgumentsJsonProvider() {
+    public ArgumentsJsonProvider(JsonConfigStructured config) {
+        if (config.fieldConfig.isPresent() && config.fieldConfig.get().arguments.isPresent()) {
+            JsonConfigStructured.ArgumentsConfig arguments = config.fieldConfig.get().arguments.get();
+            arguments.fieldName.ifPresent(f -> fieldName = f);
+        }
     }
 
-    public ArgumentsJsonProvider(boolean includeNonStructuredArguments) {
-        this.includeNonStructuredArguments = includeNonStructuredArguments;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
     public void setIncludeStructuredArguments(boolean includeStructuredArguments) {
@@ -57,20 +59,20 @@ public class ArgumentsJsonProvider implements JsonProvider {
 
             if (arg instanceof StructuredArgument) {
                 if (includeStructuredArguments) {
-                    if (!hasWrittenFieldName) {
-                        generator.writeObjectFieldStart(FIELD_ARGUMENTS);
+                    if (!hasWrittenFieldName && fieldName != null) {
+                        generator.writeObjectFieldStart(fieldName);
                         hasWrittenFieldName = true;
                     }
                     StructuredArgument structuredArgument = (StructuredArgument) arg;
                     structuredArgument.writeTo(generator);
                 }
             } else if (includeNonStructuredArguments) {
-                if (!hasWrittenFieldName) {
-                    generator.writeObjectFieldStart(FIELD_ARGUMENTS);
+                if (!hasWrittenFieldName && fieldName != null) {
+                    generator.writeObjectFieldStart(fieldName);
                     hasWrittenFieldName = true;
                 }
-                String fieldName = nonStructuredArgumentsFieldPrefix + argIndex;
-                generator.writeObjectField(fieldName, arg);
+                String innerFieldName = nonStructuredArgumentsFieldPrefix + argIndex;
+                generator.writeObjectField(innerFieldName, arg);
             }
         }
 

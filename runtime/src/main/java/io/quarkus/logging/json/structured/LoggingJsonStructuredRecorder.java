@@ -1,5 +1,7 @@
 package io.quarkus.logging.json.structured;
 
+import io.quarkus.arc.Arc;
+import io.quarkus.arc.InjectableInstance;
 import io.quarkus.logging.json.structured.providers.ArgumentsJsonProvider;
 import io.quarkus.logging.json.structured.providers.HostNameJsonProvider;
 import io.quarkus.logging.json.structured.providers.LogLevelJsonProvider;
@@ -14,8 +16,6 @@ import io.quarkus.logging.json.structured.providers.StackTraceJsonProvider;
 import io.quarkus.logging.json.structured.providers.ThreadIDJsonProvider;
 import io.quarkus.logging.json.structured.providers.ThreadNameJsonProvider;
 import io.quarkus.logging.json.structured.providers.TimestampJsonProvider;
-import io.quarkus.arc.Arc;
-import io.quarkus.arc.InjectableInstance;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class LoggingJsonStructuredRecorder {
         providers.add(new StackTraceJsonProvider());
         providers.add(new ThreadNameJsonProvider());
         providers.add(new ThreadIDJsonProvider());
-        providers.add(new ArgumentsJsonProvider());
+        providers.add(new ArgumentsJsonProvider(config));
 
         instance.forEach(providers::add);
 
