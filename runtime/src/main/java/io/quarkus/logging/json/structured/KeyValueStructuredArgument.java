@@ -4,17 +4,17 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 import java.io.IOException;
 
-public class StructuredArgumentImpl implements StructuredArgument {
+public class KeyValueStructuredArgument implements StructuredArgument {
     private final String key;
     private final Object value;
 
-    StructuredArgumentImpl(String key, Object value) {
+    KeyValueStructuredArgument(String key, Object value) {
         this.key = key;
         this.value = value;
     }
 
-    public static StructuredArgument jsonArg(String key, Object value) {
-        return new StructuredArgumentImpl(key, value);
+    public static StructuredArgument kv(String key, Object value) {
+        return new KeyValueStructuredArgument(key, value);
     }
 
     @Override

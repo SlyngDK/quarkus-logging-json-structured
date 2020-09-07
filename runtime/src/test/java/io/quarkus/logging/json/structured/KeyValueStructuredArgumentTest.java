@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class StructuredArgumentImplTest {
+class KeyValueStructuredArgumentTest {
 
     @Test
     void testStructuredArgumentWriteTo() throws Exception {
@@ -42,7 +42,7 @@ class StructuredArgumentImplTest {
         try (JsonGenerator generator = factory.createGenerator(w)) {
             generator.writeStartObject();
 
-            new StructuredArgumentImpl(key, value).writeTo(generator);
+            new KeyValueStructuredArgument(key, value).writeTo(generator);
             generator.writeEndObject();
             generator.flush();
         }
