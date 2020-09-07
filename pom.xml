@@ -7,7 +7,7 @@
     <!--    <parent>-->
     <!--        <groupId>io.quarkus</groupId>-->
     <!--        <artifactId>quarkus-build-parent</artifactId>-->
-    <!--        <version>1.7.1.Final</version>-->
+    <!--        <version>1.7.2.Final</version>-->
     <!--    </parent>-->
 
     <groupId>io.quarkus</groupId>
@@ -23,7 +23,7 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
 
-        <quarkus.version>1.7.1.Final</quarkus.version>
+        <quarkus.version>1.7.2.Final</quarkus.version>
     </properties>
 
     <packaging>pom</packaging>
